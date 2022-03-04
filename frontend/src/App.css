@@ -1,0 +1,77 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: lightgray;
+}
+
+.homepage {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.homepage > div {
+  display: flex; 
+  flex-basis: calc(50% - 40px);  
+  justify-content: center;
+  flex-direction: column;
+}
+
+.homepage > div > div {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.box { 
+  
+  margin: 20px;
+  padding: 20px; 
+  text-align: center;
+  /* background-color: white; */
+
+}
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+.card {
+  height: 100%;
+}
+
+.form-control {
+  width: 300px !important;
+  display: inline-block;
+  margin: 10px;
+}
+
+.formBtn {
+  margin: 10px;
+}
+
+/* .box1 { 
+  background-color: red;
+}
+
+.box2 { 
+  background-color: blue; 
+}
+
+.box3 { 
+  background-color: green; 
+}
+
+.box4 { 
+  background-color: green; 
+}
+
+.box5 { 
+  background-color: gray; 
+}
+
+.box6 { 
+  background-color: gray; 
+} */

@@ -1,0 +1,45 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.homepage {
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.homepage > div {
+    display: flex; 
+    flex-basis: calc(50% - 40px);  
+    justify-content: center;
+    flex-direction: column;
+  }
+
+.homepage > div > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
+.box { 
+    margin: 20px; 
+    text-align: center;
+}
+
+/* .box1 { 
+    background-color: red;
+    border-color: green;
+}
+
+.box2 { 
+    background-color: orange; 
+}
+
+.box3 { 
+    background-color: purple; 
+}
+
+.box4 { 
+    background-color: grey; 
+} */
