@@ -6,6 +6,10 @@ import Card from 'react-bootstrap/Card';
 import Collapse from 'react-bootstrap/Collapse';
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover'
+import Alert from 'react-bootstrap/Alert'
+
 // Wordle Components
 import Solver from './components/Wordle/Solver';
 import WordleButton from './components/Wordle/Button';
@@ -34,6 +38,7 @@ const App = () => {
   const [showAnswer, setShowAnswer] = useState(false)
   const [modal, setModal] = useState(false)
   const [open, setOpen] = useState(false)
+  const [alert, setAlert] = useState('')
   
   const [services, setServices] = useState([])
   const [serviceName, setServiceName] = useState('')
@@ -45,7 +50,7 @@ const App = () => {
   const [chanceAge, setChanceAge] = useState([])
 
   useEffect(() => {
-    getNetsGames.getMyTeamNextGame().then(initialData => {
+    getNetsGames.getNetsNextGame().then(initialData => {
       setNetsGames(initialData)
     })
   }, [])
@@ -73,11 +78,11 @@ const App = () => {
     event.preventDefault()
     const stat = {
       stat_type: statName,
-      value: value,
+      stat_value: value,
       age: chanceAge,
     }
-    if (value === '' || statName === '' || chanceAge === '') {
-      alert('Please enter a value for all fields')
+    if (!stat.value || !stat.statName) {
+      setAlert('Please enter a value')
     } else {
       chanceServices.addStat(stat).then(returnedStat => {
         setChanceStats(returnedStat)
@@ -94,8 +99,9 @@ const App = () => {
       serviceType: serviceName,
       serviceMileage: serviceMileage,
     }
-    if (!serviceName || !serviceMileage) {
-      alert('Please enter a value')
+    if (!service.serviceType || !service.serviceMileage) {
+      console.log(service.serviceName)
+      setAlert('Please enter a value')
     } else {
       getCarServices.addService(service).then(returnedServices => {
         setServices(services.concat(returnedServices))
@@ -138,7 +144,8 @@ const App = () => {
   }
 
   const serviceNextDue =  getCarServices.recommendedIntervals
-
+  
+  const closeAlert = () => setAlert('')
 
   return (
     <div className="App">
@@ -190,16 +197,22 @@ const App = () => {
                   </div>
                 </Collapse>
             </Card.Text>
-            <Button className="formBtn" onClick={() => setOpen(!open)} size="sm">Connect</Button>
+            <Button className="formBtn" onClick={() => setOpen(!open)} size="sm">Send</Button>
             <Card.Footer className="text-muted">This component connects to an IoT device via a python service...</Card.Footer> 
           </Card.Body>
         </Card>          
       </div>
       <div id="car" className="box box3">
         <Card>
-            <Card.Body>
-              <Card.Header as="h3">Car</Card.Header>
-              <Card.Text>
+          <Card.Body>
+            <Card.Header as="h3">Car</Card.Header>
+            <Card.Text>
+            {alert ? 
+              <Alert variant="danger" onClose={closeAlert} dismissible>
+                <Alert.Heading>{alert}</Alert.Heading>
+              </Alert> :
+                <></>            
+            }                                          
               <div>
                 <CarForm onSubmit={addService} serviceName={serviceName} serviceMileage={serviceMileage} handleServiceChange={handleServiceChange} handleMileageChange={handleMileageChange} />
               </div>
@@ -226,6 +239,12 @@ const App = () => {
           <Card.Body>
             <Card.Header as="h3">Chance's Stats</Card.Header>
             <Card.Text>
+            {alert ? 
+              <Alert variant="danger" onClose={closeAlert} dismissible>
+                <Alert.Heading>{alert}</Alert.Heading>
+              </Alert> :
+                <></>            
+            }  
             <div>
                 <ChanceForm onSubmit={addStat} statName={statName} value={value} chanceAge={chanceAge} handleStatChange={handleStatChange} handleValueChange={handleValueChange} handleAgeChange={handleAgeChange}/>
               </div>

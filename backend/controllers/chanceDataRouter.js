@@ -14,7 +14,7 @@ chanceStatsRouter.get('/', async (request, response) => {
 chanceStatsRouter.post('/', async (request, response) => {
 
     const stat_type = request.body.stat_type
-    const value = request.body.value
+    const value = request.body.stat_value
     const age = request.body.age
     const n = await Stat.findAll()
     try {
